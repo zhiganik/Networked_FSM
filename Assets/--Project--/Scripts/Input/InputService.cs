@@ -12,6 +12,7 @@ namespace __Project__.Scripts.Input
         private InputAction _move;
 
         public event Action<Vector2> OnMovePerformed;
+        public event Action OnMoveCanceled;
 
         private const string MoveAction = "Move";
 
@@ -29,16 +30,24 @@ namespace __Project__.Scripts.Input
         public void Initialize()
         {
             _move.performed += OnMove;
+            _move.canceled += MoveStop;
         }
-        
+
         public void Dispose()
         {
             _move.performed -= OnMove;
+            _move.canceled -= MoveStop;
+        }
+
+        private void MoveStop(InputAction.CallbackContext obj)
+        {
+            OnMoveCanceled?.Invoke();
         }
 
         private void OnMove(InputAction.CallbackContext context)
         {
             var value = context.ReadValue<Vector2>();
+            Debug.Log(value);
             OnMovePerformed?.Invoke(value);
         }
     }

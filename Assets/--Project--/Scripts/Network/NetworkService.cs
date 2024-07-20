@@ -87,6 +87,15 @@ namespace __Project__.Scripts.Network
             var result = await _myRunner.JoinSessionLobby(SessionLobby.Custom, networkConfiguration.lobbyId);
             return result.Ok;
         }
+        
+        public async Task LoadScene(int index, LoadSceneMode mode)
+        {
+            if(_myRunner is null) return;
+            
+            if(!_myRunner.IsSceneAuthority) return;
+            
+            await _myRunner.LoadScene(SceneRef.FromIndex(index), mode);
+        }
 
         private void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
         {

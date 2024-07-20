@@ -1,6 +1,6 @@
 using __Project__.Scripts.Network;
-using Fusion;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace __Project__.Scripts.Test
@@ -22,6 +22,7 @@ namespace __Project__.Scripts.Test
             if(!await _networkService.ConnectToLobby()) return;
 
             await _networkService.ConnectToRoom(roomName);
+            await _networkService.LoadScene(1, LoadSceneMode.Additive);
         }
     }
 }
