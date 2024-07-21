@@ -47,7 +47,6 @@ namespace __Project__.Scripts.Input
         private void OnMove(InputAction.CallbackContext context)
         {
             var value = context.ReadValue<Vector2>();
-            Debug.Log(value);
             OnMovePerformed?.Invoke(value);
         }
     }

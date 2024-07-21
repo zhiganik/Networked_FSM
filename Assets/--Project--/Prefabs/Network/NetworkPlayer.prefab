@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 7011737607754544881}
   - component: {fileID: 9095304357091921906}
   - component: {fileID: 6569663271127590515}
+  - component: {fileID: -8857962773846235980}
   - component: {fileID: 2892477375356225990}
+  - component: {fileID: 7636120239639006813}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -55,6 +57,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 9095304357091921906}
   - {fileID: 6569663271127590515}
+  - {fileID: -8857962773846235980}
 --- !u!114 &9095304357091921906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,7 +71,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 2892477375356225990}
-  moveSpeed: 0.005
+  animationsSystem: {fileID: -8857962773846235980}
+  animator: {fileID: 7636120239639006813}
+  moveSpeed: 1
+  rotationSpeed: 1
   cameraHeight: 1.7
 --- !u!114 &6569663271127590515
 MonoBehaviour:
@@ -86,6 +92,23 @@ MonoBehaviour:
   SyncParent: 0
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 1
+--- !u!114 &-8857962773846235980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780754220916568999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20992c36bc143f98f696229556fbca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleCLip: {fileID: -203655887218126122, guid: 27974aeb7d442134096c3a009fbebcf0,
+    type: 3}
+  moveCLip: {fileID: -203655887218126122, guid: 0ff66930d0aeb074c8131180faaaeefd,
+    type: 3}
+  runCLip: {fileID: -203655887218126122, guid: 0ff66930d0aeb074c8131180faaaeefd, type: 3}
 --- !u!143 &2892477375356225990
 CharacterController:
   m_ObjectHideFlags: 0
@@ -112,6 +135,27 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.93, z: 0}
+--- !u!95 &7636120239639006813
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780754220916568999}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 69a75c0770c67c148ab1f28e674c8568, type: 3}
+  m_Controller: {fileID: 9100000, guid: b0f5f18ff8218634986105e177f5a431, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7640265497060875929
 PrefabInstance:
   m_ObjectHideFlags: 0
