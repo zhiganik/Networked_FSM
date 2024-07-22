@@ -21,6 +21,7 @@ namespace __Project__.Scripts.Player
             var idleState = new IdleState(player, animator);
             
             
+            
         }
 
         public void At(IState from, IState to, IPredicate condition)
