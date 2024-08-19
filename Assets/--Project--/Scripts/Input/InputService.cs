@@ -8,46 +8,60 @@ namespace __Project__.Scripts.Input
     public class InputService : IInputService, IInitializable, IDisposable
     {
         private readonly PlayerInput _playerInput;
-        
-        private InputAction _move;
 
-        public event Action<Vector2> OnMovePerformed;
-        public event Action OnMoveCanceled;
+        public event Action OnJump;
+        public event Action<Vector2> OnMove;
+        public event Action<Vector2> OnLook;
 
         private const string MoveAction = "Move";
 
-        public InputService(PlayerInput playerInput)
+        public InputService()
         {
-            _playerInput = playerInput;
-            InitActions();
+            _playerInput = new PlayerInput();
+            
         }
-
-        private void InitActions()
-        {
-            _move = _playerInput.actions[MoveAction];
-        }
-
+        
         public void Initialize()
         {
-            _move.performed += OnMove;
-            _move.canceled += MoveStop;
+            _playerInput.Player.Move.performed += Move;
+            _playerInput.Player.Move.canceled += Move;
+            
+            _playerInput.Player.Look.performed += Look;
+            _playerInput.Player.Look.canceled += Look;
+            
+            _playerInput.Player.Jump.performed += Jump;
+            
+            _playerInput.Enable();
         }
 
         public void Dispose()
         {
-            _move.performed -= OnMove;
-            _move.canceled -= MoveStop;
+            _playerInput.Player.Move.performed -= Move;
+            _playerInput.Player.Move.canceled -= Move;
+            
+            _playerInput.Player.Look.performed -= Look;
+            _playerInput.Player.Look.canceled -= Look;
+            
+            _playerInput.Player.Jump.performed -= Jump;
+            
+            _playerInput.Disable();
         }
 
-        private void MoveStop(InputAction.CallbackContext obj)
+        private void Jump(InputAction.CallbackContext context)
         {
-            OnMoveCanceled?.Invoke();
+            OnJump?.Invoke();
         }
 
-        private void OnMove(InputAction.CallbackContext context)
+        private void Look(InputAction.CallbackContext context)
         {
             var value = context.ReadValue<Vector2>();
-            OnMovePerformed?.Invoke(value);
+            OnLook?.Invoke(value);
+        }
+
+        private void Move(InputAction.CallbackContext context)
+        {
+            var value = context.ReadValue<Vector2>();
+            OnMove?.Invoke(value);
         }
     }
 }

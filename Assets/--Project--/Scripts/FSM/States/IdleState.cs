@@ -11,7 +11,7 @@ namespace __Project__.Scripts.FSM.States
 
         public override void OnEnter()
         {
-            
+            Animator.CrossFade("Idle", TransitionDuration);
         }
     }
 }

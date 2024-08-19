@@ -7,7 +7,7 @@ using UnityEngine.Playables;
 namespace __Project__.Scripts.Player
 {
     [RequireComponent(typeof(Animator))]
-    public class AnimationsSystemODD : NetworkBehaviour
+    public class PlayableTest : NetworkBehaviour
     {
         [SerializeField] private AnimationClip idleCLip;
         [SerializeField] private AnimationClip moveCLip;

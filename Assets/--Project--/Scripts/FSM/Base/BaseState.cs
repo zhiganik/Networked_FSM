@@ -9,7 +9,7 @@ namespace __Project__.Scripts.FSM
         protected readonly NetworkPlayer Player;
         protected readonly Animator Animator;
 
-        protected const float TransitionDuration = 0.1f;
+        protected const float TransitionDuration = 0.2f;
         
         protected BaseState(NetworkPlayer player, Animator animator)
         {
