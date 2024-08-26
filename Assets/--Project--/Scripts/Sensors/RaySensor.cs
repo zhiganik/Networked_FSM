@@ -4,8 +4,8 @@ namespace __Project__.Scripts.Sensors
 {
     public class RaySensor
     {
-        private float _castLength;
         private LayerMask _layerMask;
+        private readonly float _castRadius;
         private readonly Transform _targetTransform;
 
         private Vector3 _origin = Vector3.zero;
@@ -14,20 +14,20 @@ namespace __Project__.Scripts.Sensors
 
         public Vector3 OriginPoint => _origin;
 
-        public RaySensor(Transform targetTransform)
+        public RaySensor(Transform targetTransform, float radius)
         {
+            _castRadius = radius;
             _targetTransform = targetTransform;
         }
 
-        public  void Cast()
+        public void Cast()
         {
             Vector3 worldOrigin = _targetTransform.TransformPoint(_origin);
             Vector3 worldDirection = GetCastDirection();
 
-            Physics.Raycast(worldOrigin, worldDirection, out _hitInfo, _castLength);
+            Physics.Raycast(worldOrigin, worldDirection, out _hitInfo, float.MaxValue);
         }
         
-        public void SetCastLength(float castLength) => _castLength = castLength;
         public void SetLayerMask(LayerMask layerMask) => _layerMask = layerMask;
         public void SetCastDirection(CastDirection direction) => _castDirection = direction;
         public void SetCastOrigin(Vector3 pos) => _origin = _targetTransform.InverseTransformPoint(pos);

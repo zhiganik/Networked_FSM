@@ -10,15 +10,14 @@ namespace __Project__.Scripts.Input
         private readonly PlayerInput _playerInput;
 
         public event Action OnJump;
+        public event Action OnCrouch;
+        public event Action<bool> OnSprint;
         public event Action<Vector2> OnMove;
         public event Action<Vector2> OnLook;
-
-        private const string MoveAction = "Move";
 
         public InputService()
         {
             _playerInput = new PlayerInput();
-            
         }
         
         public void Initialize()
@@ -30,6 +29,11 @@ namespace __Project__.Scripts.Input
             _playerInput.Player.Look.canceled += Look;
             
             _playerInput.Player.Jump.performed += Jump;
+            
+            _playerInput.Player.Sprint.performed += Sprint;
+            _playerInput.Player.Sprint.canceled += Sprint;
+            
+            _playerInput.Player.Crouch.performed += Crouch;
             
             _playerInput.Enable();
         }
@@ -44,12 +48,27 @@ namespace __Project__.Scripts.Input
             
             _playerInput.Player.Jump.performed -= Jump;
             
+            _playerInput.Player.Sprint.performed -= Sprint;
+            _playerInput.Player.Sprint.canceled -= Sprint;
+            
+            _playerInput.Player.Crouch.performed -= Crouch;
+            
             _playerInput.Disable();
         }
 
         private void Jump(InputAction.CallbackContext context)
         {
             OnJump?.Invoke();
+        }
+        
+        private void Sprint(InputAction.CallbackContext context)
+        {
+            OnSprint?.Invoke(!context.canceled);
+        }
+        
+        private void Crouch(InputAction.CallbackContext context)
+        {
+            OnCrouch?.Invoke();
         }
 
         private void Look(InputAction.CallbackContext context)

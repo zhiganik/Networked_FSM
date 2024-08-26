@@ -1,4 +1,3 @@
-using Fusion;
 using UnityEngine;
 using NetworkPlayer = __Project__.Scripts.Network.NetworkPlayer;
 
@@ -9,7 +8,10 @@ namespace __Project__.Scripts.FSM
         protected readonly NetworkPlayer Player;
         protected readonly Animator Animator;
 
-        protected const float TransitionDuration = 0.2f;
+        protected const float TransitionDuration = 0.35f;
+        
+        protected static readonly int VelocityX = Animator.StringToHash("VelocityX");
+        protected static readonly int VelocityY = Animator.StringToHash("VelocityY");
         
         protected BaseState(NetworkPlayer player, Animator animator)
         {
@@ -24,7 +26,8 @@ namespace __Project__.Scripts.FSM
 
         public virtual void Update()
         {
-            // noop
+            Player.HandleFloor();
+            Player.HandleGravity();
         }
 
         public virtual void FixedUpdate()

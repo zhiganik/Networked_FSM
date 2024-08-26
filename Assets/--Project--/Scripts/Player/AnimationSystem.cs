@@ -20,21 +20,29 @@ namespace __Project__.Scripts.Player
         {
             _stateMachine = new StateMachine();
             
-            var walkState = new Locomotion(player, animator);
-            var idleState = new IdleState(player, animator);
-            var jumpState = new JumpState(player, animator);
-            var fallingState = new FallingState(player, animator);
+            var walkState = new Run(player, animator);
+            var fallingState = new Falling(player, animator);
+            var idleState = new Idle(player, animator);
+            var jumpState = new Jump(player, animator);
+            var sprintState = new Sprint(player, animator);
+            var crunchState = new Crouch(player, animator);
+
+            At(idleState, walkState, new FuncPredicate(() => player.IsMoving));
+            At(walkState, idleState, new FuncPredicate(() => !player.IsMoving));
+            At(walkState, sprintState, new FuncPredicate(() => player.IsMoving && player.IsSprint));
+            At(sprintState, walkState, new FuncPredicate(() => player.IsMoving && !player.IsSprint));
+            At(sprintState, idleState, new FuncPredicate(() => !player.IsMoving && !player.IsSprint));
             
-            At(idleState, walkState, new FuncPredicate(() => player.IsMove));
-            At(walkState, idleState, new FuncPredicate(() => !player.IsMove));
+            Any(jumpState, new FuncPredicate(() => player.IsGrounded && player.IsJumping));
             
-            At(idleState, jumpState, new FuncPredicate(() => player.IsJump && player.IsGrounded));
-            At(walkState, jumpState, new FuncPredicate(() => player.IsJump && player.IsGrounded));
+            Any(fallingState, new FuncPredicate(() => !player.IsGrounded && !player.IsJumping));
+            Any(crunchState, new FuncPredicate(() => player.IsGrounded && player.IsCrouch));
             
-            Any(fallingState, new FuncPredicate(() => !player.IsGrounded && !player.IsJump));
+            At(crunchState, idleState, new FuncPredicate(() => !player.IsCrouch && !player.IsMoving));
+            At(crunchState, walkState, new FuncPredicate(() => !player.IsCrouch && player.IsMoving));
             
             At(fallingState, idleState, new FuncPredicate(() => player.IsGrounded));
-            At(fallingState, walkState, new FuncPredicate(() => player.IsGrounded && player.IsMove));
+            At(fallingState, walkState, new FuncPredicate(() => player.IsGrounded && player.IsMoving));
             
             _stateMachine.SetState(idleState);
         }
